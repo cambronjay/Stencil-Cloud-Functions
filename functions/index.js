@@ -15,8 +15,9 @@ exports.LoadPictures = functions.https.onRequest((request, response) => {
         return response.status(403).send('Forbidden!');
     }
     return cors(request, response, () => {
+        const page = request.query.page;
         try {
-            const g = unsplash.search.photos("mountains", 1, 25, { orientation: "portrait" })
+            const g = unsplash.search.photos("mountains", page, 15, { orientation: "portrait" })
                 .then(toJson)
                 .then(json => {
                     return response.status(200).send(json);
